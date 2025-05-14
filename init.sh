@@ -13,6 +13,7 @@ chmod +x ./src/scripts/*.sh
 source ./src/scripts/system_updates.sh
 source ./src/static/colors.sh
 source ./src/scripts/suport.sh
+source ./src/scripts/dependicies.sh
 
 ############################
 # Scripts
@@ -26,20 +27,7 @@ run_all() {
 # Exec
 ############################
 # Install Dependecies
-if ! verify_program lolcat; then
-    echo "lolcat is missing installing it..."
-    sudo apt install lolcat
-fi
-
-if ! verify_program cowsay; then
-    echo "cowsay is missing installing it..."
-    sudo apt install cowsay
-fi
-
-if ! verify_program kitty; then
-    echo "kitty is missing installing it..."
-    sudo apt install kitty
-fi
+verify_dependecies
 
 if ! [ -d "$HOME/.oh-my-bash" ]; then
     echo "oh-my-bash its not installed..."
