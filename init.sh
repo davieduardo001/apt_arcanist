@@ -12,10 +12,41 @@ chmod +x ./src/scripts/*.sh
 ############################
 source ./src/scripts/system_updates.sh
 source ./src/static/colors.sh
+source ./src/scripts/suport.sh
+
+############################
+# Scripts
+############################
+run_all() {
+    update_sys # from system_updates
+    upgrade_sys # from system_updates
+}
 
 ############################
 # Exec
 ############################
+# Install Dependecies
+if ! verify_program lolcat; then
+    echo "lolcat is missing installing it..."
+    sudo apt install lolcat
+fi
+
+if ! verify_program cowsay; then
+    echo "cowsay is missing installing it..."
+    sudo apt install cowsay
+fi
+
+if ! verify_program kitty; then
+    echo "kitty is missing installing it..."
+    sudo apt install kitty
+fi
+
+if ! [ -d "$HOME/.oh-my-bash" ]; then
+    echo "oh-my-bash its not installed..."
+    bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
+fi
+
+# Init Script
 clear
 show_cute_dragon
 echo -e "\n${CYAN}Welcome to Apt Arcanist!${RESET}\n"
@@ -34,11 +65,6 @@ read -p "What u' wanna do? " what_to_do
 
 # OPTION 1 - Intall all
 if [[ "$what_to_do" == 1 ]]; then
-    run_all() {
-        update_sys
-        upgrade_sys
-    }
-
     run_all
 fi
 
@@ -57,6 +83,5 @@ if [[ "$what_to_do" == 4 ]]; then
     update_sys
     upgrade_sys
 fi
-
 
 echo -e "Automation complete!"
